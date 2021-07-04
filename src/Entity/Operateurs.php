@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\OperateursRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\OperateursRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=OperateursRepository::class)
  */
+
+#[ApiResource]
 class Operateurs
 {
     /**
@@ -38,6 +41,11 @@ class Operateurs
      * @ORM\OneToMany(targetEntity=Banques::class, mappedBy="nom")
      */
     private $banques;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $chiffre_affaire;
 
     public function __construct()
     {
@@ -111,6 +119,18 @@ class Operateurs
                 $banque->setNom(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getChiffreAffaire(): ?string
+    {
+        return $this->chiffre_affaire;
+    }
+
+    public function setChiffreAffaire(?string $chiffre_affaire): self
+    {
+        $this->chiffre_affaire = $chiffre_affaire;
 
         return $this;
     }

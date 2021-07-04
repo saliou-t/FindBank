@@ -34,6 +34,11 @@ class Region
      */
     private $departement;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $postal;
+
     public function __construct()
     {
         $this->departement = new ArrayCollection();
@@ -94,6 +99,18 @@ class Region
                 $departement->setRegion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPostal(): ?string
+    {
+        return $this->postal;
+    }
+
+    public function setPostal(?string $postal): self
+    {
+        $this->postal = $postal;
 
         return $this;
     }

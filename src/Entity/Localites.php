@@ -24,25 +24,7 @@ class Localites
      */
     private $nom;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private $region;
-
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private $departement;
-
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private $commune;
-
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private $quartier;
+    
 
     /**
      * @ORM\OneToMany(targetEntity=Banques::class, mappedBy="localite")
