@@ -49,6 +49,12 @@ class Localites
      */
     private $banques;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Quartier::class, inversedBy="localites")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $IdQuertier;
+
     public function __construct()
     {
         $this->banques = new ArrayCollection();
@@ -145,6 +151,18 @@ class Localites
                 $banque->setLocalite(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIdQuertier(): ?Quartier
+    {
+        return $this->IdQuertier;
+    }
+
+    public function setIdQuertier(?Quartier $IdQuertier): self
+    {
+        $this->IdQuertier = $IdQuertier;
 
         return $this;
     }

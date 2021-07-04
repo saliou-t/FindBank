@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Coordonnees;
+use App\Entity\Commune;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Coordonnees|null find($id, $lockMode = null, $lockVersion = null)
- * @method Coordonnees|null findOneBy(array $criteria, array $orderBy = null)
- * @method Coordonnees[]    findAll()
- * @method Coordonnees[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Commune|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Commune|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Commune[]    findAll()
+ * @method Commune[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CoordonneesRepository extends ServiceEntityRepository
+class CommuneRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Coordonnees::class);
+        parent::__construct($registry, Commune::class);
     }
 
     // /**
-    //  * @return Coordonnees[] Returns an array of Coordonnees objects
+    //  * @return Commune[] Returns an array of Commune objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CoordonneesRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Coordonnees
+    public function findOneBySomeField($value): ?Commune
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

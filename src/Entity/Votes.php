@@ -27,6 +27,11 @@ class Votes
      */
     private $commentaire;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $valeur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class Votes
     public function setCommentaire(?string $commentaire): self
     {
         $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    public function getValeur(): ?int
+    {
+        return $this->valeur;
+    }
+
+    public function setValeur(?int $valeur): self
+    {
+        $this->valeur = $valeur;
 
         return $this;
     }

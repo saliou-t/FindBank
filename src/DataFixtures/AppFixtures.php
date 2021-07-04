@@ -1,37 +1,51 @@
 <?php
 
 namespace App\DataFixtures;
-use App\Entity\Banques;
-use App\Entity\Operateurs;
+// use Faker\Factory;
+use Faker;
 
 use Faker\Factory;
-use App\Repository\BanquesRepository;
+
+use App\Entity\Banques;
+use App\Entity\Operateurs;
+use App\Entity\Region;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // $nomBanks = ['UBA','BCAO','BOA','SGBS','BHS','BICIS','Citi Banque','ICB','LocaAfrik','CS','Ecobank','BSS','CNCA','BRSS','ICB','BAS'];
         
-        // $faker = Faker\Factory::create('fr_FR');
+        $faker = Faker\Factory::create();
+        //Je veux créer 16 opérateurs
+        
+        $nomBanks = ['','UBA','BCAO','BOA','BHS','BICIS','Citi Banque','ICB','LocaAfrik','CS','Ecobank','BSS','CNCA','BRSS','ICB','BAS','BIS', ];
+        for($i=1; $i<=15; $i++){
 
-        // //Je veux créer 16 opérateurs
-        // for($i=1; $i<=count($nomBanks); $i++){
+            $bank = $nomBanks[$i];
 
-        //     $libelle = '<p>'.join($faker->paragraphs(2), '</p><p>') .'</p>';
+            $operateur = new Operateurs();
+            $operateur->setNom($bank)
+                      ->setLibelle($faker->paragraph(2))
+                      ->setNbreBanks($faker->numberBetween(11,23));
+
+            $manager->persist($operateur);
+
+            //je veux créer autant des régions
+
+            $Nomregions = ['Dakar','Thiès','Diourbel','Fatick','Tambacounda'];
+
+            for ($j=1; $j < count($Nomregions) ; $j++) { 
+                
+                $region = new Region();
+                $region->nom()
+            }
+
             
-        //     $operateur = new Operateurs();
-
-        //     $operateur->setNom($nomBanks[$i])
-        //     $operateur->setLibelle($faker->sentence())
-        //     $operateur->setNbreBanks(16);
-        
         }
-        // $product = new Product();
-        // $manager->persist($product);
-
-        // $manager->flush();
+        $manager->flush();
     
+    }
 }
