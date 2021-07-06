@@ -25,7 +25,7 @@ class Banques
     /**
      * @ORM\ManyToOne(targetEntity=Operateurs::class, inversedBy="banques")
      */
-    private $nom;
+    private $Operateur;
 
     /**
      * @ORM\ManyToOne(targetEntity=Localites::class, inversedBy="banques")
@@ -82,14 +82,14 @@ class Banques
         return $this->id;
     }
 
-    public function getNom(): ?Operateurs
+    public function getOperateur(): ?Operateurs
     {
-        return $this->nom;
+        return $this->Operateur;
     }
 
-    public function setNom(?Operateurs $nom): self
+    public function setoperateur(?Operateurs $Operateur): self
     {
-        $this->nom = $nom;
+        $this->nom = $Operateur;
 
         return $this;
     }

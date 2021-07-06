@@ -47,6 +47,11 @@ class Operateurs
      */
     private $chiffre_affaire;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $logoUrl;
+
     public function __construct()
     {
         $this->banques = new ArrayCollection();
@@ -131,6 +136,18 @@ class Operateurs
     public function setChiffreAffaire(?string $chiffre_affaire): self
     {
         $this->chiffre_affaire = $chiffre_affaire;
+
+        return $this;
+    }
+
+    public function getLogoUrl(): ?string
+    {
+        return $this->logoUrl;
+    }
+
+    public function setLogoUrl(?string $logoUrl): self
+    {
+        $this->logoUrl = $logoUrl;
 
         return $this;
     }
