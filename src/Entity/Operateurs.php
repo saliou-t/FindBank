@@ -38,11 +38,6 @@ class Operateurs
     private $nbre_banks;
 
     /**
-     * @ORM\OneToMany(targetEntity=Banques::class, mappedBy="nom")
-     */
-    private $banques;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $chiffre_affaire;
@@ -51,6 +46,11 @@ class Operateurs
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $logoUrl;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Banques::class, mappedBy="operateur")
+     */
+    private $banques;
 
     public function __construct()
     {
@@ -98,36 +98,6 @@ class Operateurs
         return $this;
     }
 
-    /**
-     * @return Collection|Banques[]
-     */
-    public function getBanques(): Collection
-    {
-        return $this->banques;
-    }
-
-    public function addBanque(Banques $banque): self
-    {
-        if (!$this->banques->contains($banque)) {
-            $this->banques[] = $banque;
-            $banque->setNom($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBanque(Banques $banque): self
-    {
-        if ($this->banques->removeElement($banque)) {
-            // set the owning side to null (unless already changed)
-            if ($banque->getNom() === $this) {
-                $banque->setNom(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getChiffreAffaire(): ?string
     {
         return $this->chiffre_affaire;
@@ -148,6 +118,36 @@ class Operateurs
     public function setLogoUrl(?string $logoUrl): self
     {
         $this->logoUrl = $logoUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Banques[]
+     */
+    public function getBanques(): Collection
+    {
+        return $this->banques;
+    }
+
+    public function addBanque(Banques $banque): self
+    {
+        if (!$this->banques->contains($banque)) {
+            $this->banques[] = $banque;
+            $banque->setOperateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBanque(Banques $banque): self
+    {
+        if ($this->banques->removeElement($banque)) {
+            // set the owning side to null (unless already changed)
+            if ($banque->getOperateur() === $this) {
+                $banque->setOperateur(null);
+            }
+        }
 
         return $this;
     }

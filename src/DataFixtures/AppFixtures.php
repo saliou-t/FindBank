@@ -25,9 +25,10 @@ class AppFixtures extends Fixture
         
         $faker = Faker\Factory::create();
         //Je veux créer 16 opérateurs
+        $liste_operateur = [];
         
-        $nomOperators = ['ICB','LocaAfrik','CS','Ecobank','BSS','BRSS','ICB','BAS','BIS' ];
         for($i=0; $i<= 6; $i++){
+            $nomOperators = ['UBA','LocaAfrik','BHS','CS','BSS','ICB','Ecobank','BAS','BIS' ];
 
             $oprators = $nomOperators[$i];
 
@@ -40,24 +41,24 @@ class AppFixtures extends Fixture
                       ->setNbreBanks($faker->numberBetween(11,23));
 
             $manager->persist($operateur);
+            $liste_operateur[] = $operateur;
+        }
 
             //je veux créer autant des régions
-
+        for ($j=0; $j <= 4  ; $j++) { 
             $Nomregions = ['Dakar','Thiès','Diourbel','Fatick','Kaolack'];
 
-            for ($j=0; $j <= 4  ; $j++) { 
+            $region = new Region();
 
-                $region = new Region();
-
-                $reg = $Nomregions[$j];
-                
-                $region->setNom($reg)
-                       ->setPostal($faker->postcode())
-                       ->setSuperficie($faker->numberBetween(150,310));
+            $reg = $Nomregions[$j];
+            
+            $region->setNom($reg)
+                    ->setPostal($faker->postcode())
+                    ->setSuperficie($faker->numberBetween(150,310));
             $manager->persist($region);
 
-            //Pour chaque régionn, je veux créer des departemants
-                for ($k=0; $k <mt_rand(2,3) ; $k++) { 
+                    //Pour chaque régionn, je veux créer des departemants
+                for ($k=0; $k <mt_rand(3,4) ; $k++) { 
                     
                     $departement = new Departement();
                     $departement->setNom($faker->city())
@@ -65,8 +66,7 @@ class AppFixtures extends Fixture
                     $manager->persist($departement);
 
                     //pour chaque departement, je veux créer des communes
-
-                    for ($l=0; $l <mt_rand(2,4) ; $l++) { 
+                    for ($l=1; $l <mt_rand(2,5) ; $l++) { 
                         $commue = new Commune();   
                         $commue->setNom($faker->city())
                                 ->setDepartement($departement);
@@ -74,32 +74,31 @@ class AppFixtures extends Fixture
                         $manager->persist($commue);
 
                         //pour chaque departement, je veux créer des quartiers
-
-                        for ($m=1; $m < mt_rand(1,3); $m++) { 
+                        for ($m=1; $m < mt_rand(2,3); $m++) { 
                             $quartier = new Quartier();
                             $quartier->setNom($faker->city())
-                                     ->setCommune($commue);
+                                        ->setCommune($commue);
                             $manager->persist($quartier);
 
                             //maintenant, dans chaque quartier, nous avons des localités
-
-                            for ($n=1; $n <mt_rand(0,3) ; $n++) { 
+                            for ($n=1; $n <mt_rand(2,3) ; $n++) { 
                                 $localite = new Localites();
 
                                 $localite->setNom(strtoupper($faker->citySuffix()))
                                         ->setQuartier($quartier);
 
                                 $manager->persist($localite);
-
-                                //je veux créer autant de banques que je veux pour chaque localité
-
-                                for ($p=1; $p < mt_rand(0,2) ; $p++) { 
+                            
+            //je veux créer autant de banques que je veux pour chaque localité
+                                for ($p=1; $p < mt_rand(1,2) ; $p++) { 
                                     
                                     $banque = new Banques();
 
                                     $phoneNumber = "+221 ".$faker->phoneNumber();
 
-                                    $banque->setoperateur($operateur)
+                                    $operateur_key = mt_rand(1,6);
+
+                                    $banque->setOperateur($liste_operateur[$operateur_key])
                                             ->setLocalite($localite)
                                             ->setLatitude($faker->latitude(-90,90))
                                             ->setLongitude($faker->longitude(-180,180))
@@ -110,16 +109,14 @@ class AppFixtures extends Fixture
                                             ->setTelephone($phoneNumber);
 
                                     $manager->persist($banque);
-
+                                
                                     //maitenant pour chaque banque, on veux créer des votes
 
                                     for ($t=0; $t <1 ; $t++) { 
                                         $vote = new Votes();
 
-                                        $valeurVote =  
-
                                         $vote->setIdBanque($banque)
-                                             ->setValeur(mt_rand(0,5));
+                                                ->setValeur(mt_rand(0,5));
 
                                         $manager->persist($vote);
                                     }
@@ -127,9 +124,8 @@ class AppFixtures extends Fixture
                             }
                         }
                     }
-                 }
-            }            
+                }
+            }
+            $manager->flush();
         }
-        $manager->flush();
     }
-}

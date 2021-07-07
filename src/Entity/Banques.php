@@ -7,25 +7,21 @@ use App\Repository\BanquesRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=BanquesRepository::class)
  */
-#[ApiResource]
-
+#[ApiResource()]
 class Banques
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("banques:read")
      */
     private $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Operateurs::class, inversedBy="banques")
-     */
-    private $Operateur;
 
     /**
      * @ORM\ManyToOne(targetEntity=Localites::class, inversedBy="banques")
@@ -33,11 +29,13 @@ class Banques
     private $localite;
 
     /**
+     * @Groups("banques:read")
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $latitude;
 
     /**
+     * @Groups("banques:read")
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $longitude;
@@ -64,13 +62,21 @@ class Banques
 
     /**
      * @ORM\Column(type="string")
+     * @Groups("banques:read")
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("banques:read")
      */
     private $adresse;
+
+    /**
+     * @Groups("banques:read")
+     * @ORM\ManyToOne(targetEntity=Operateurs::class, inversedBy="banques")
+     */
+    private $operateur;
 
     public function __construct()
     {
@@ -82,17 +88,6 @@ class Banques
         return $this->id;
     }
 
-    public function getOperateur(): ?Operateurs
-    {
-        return $this->Operateur;
-    }
-
-    public function setoperateur(?Operateurs $Operateur): self
-    {
-        $this->nom = $Operateur;
-
-        return $this;
-    }
 
     public function getLocalite(): ?Localites
     {
@@ -216,6 +211,18 @@ class Banques
     public function setAdresse(?string $adresse): self
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getOperateur(): ?Operateurs
+    {
+        return $this->operateur;
+    }
+
+    public function setOperateur(?Operateurs $operateur): self
+    {
+        $this->operateur = $operateur;
 
         return $this;
     }
