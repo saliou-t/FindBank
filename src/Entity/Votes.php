@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\VotesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\VotesRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=VotesRepository::class)
  */
+#[ApiResource()]
+
 class Votes
 {
     /**

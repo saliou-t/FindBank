@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\QuartierRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\QuartierRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=QuartierRepository::class)
  */
+#[ApiResource()]
+
 class Quartier
 {
     /**
@@ -39,7 +42,6 @@ class Quartier
         $this->localites = new ArrayCollection();
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -56,9 +58,6 @@ class Quartier
 
         return $this;
     }
-
-
-    
 
     public function getCommune(): ?Commune
     {
