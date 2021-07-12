@@ -1,58 +1,50 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="https://bootswatch.com/5/yeti/bootstrap.min.css">
-        <link rel="icon" href="https://www.istockphoto.com/photo/banque-sign-gm485878197-38800006?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fbanque&utm_term=banque">
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
+  <head>
+      <meta charset="UTF-8">
+      <title>{% block title %}FindBanks{% endblock %}</title>
+        <link rel="stylesheet" href="https://bootswatch.com/5/yeti/_bootswatch.scss">
+        <link rel="stylesheet" href="https://bootswatch.com/5/yeti/bootstrap.css ">
+        <link rel="icon" href="https://unsplash.com/photos/RHZYmxCTiuo">
+      {# Run `composer require symfony/webpack-encore-bundle`
+          and uncomment the following Encore helpers to start using Symfony UX #}
+      {% block stylesheets %}
+          {#{{ encore_entry_link_tags('app') }}#}
+      {% endblock %}
+
+      {% block javascripts %}
+          {#{{ encore_entry_script_tags('app') }}#}
+      {% endblock %}
+  </head>
+  <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Find Banks</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+        <div class="container-fluid">
+        <a class="navbar-brand" href="#">Find Banks</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse t" id="navbarColor01">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="/">Accueil
-            <span class="visually-hidden">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Localités</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Nouveau</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Banque</a>
-            <a class="dropdown-item" href="#">Localité</a>
-            <a class="dropdown-item" href="#">Région</a>
-            <a class="dropdown-item" href="#">Département</a>
-            <a class="dropdown-item" href="#">Quartier</a>
-          </div>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <input class="form-control me-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
-        {% block body %}
-            
-        {% endblock %}
-    </body>
+        <div class="collapse navbar-collapse t" id="navbarColor01">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="/">Accueil
+                <span class="visually-hidden">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://127.0.0.1:8000/api">APIs</a>
+            </li>
+          </ul>
+            <div class="">
+              <a class="text-white text-decoration-none btn btn-success">Admin</a>
+            </div>
+        </div>
+      </div>
+    </nav>
+      {% block body %}
+          
+      {% endblock %}
+  </body>
+>>>>>>> eseayAdmin
 </html>
