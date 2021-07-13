@@ -2,51 +2,30 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DepartementRepository;
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-
-use Doctrine\Common\Collections\Collection;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=DepartementRepository::class)
  */
-#[ApiResource(
-    itemOperations:[
-        'get',
-        'Delete'
-    ],
-    normalizationContext:[
-        'get'=>['normalization_context'=>['groups'=>'read:departement']]
-    ]
-)]
-
-#[ApiFilter(SearchFilter::class, properties:['id' => 'exact','nom' => 'partial'])]
-
-
 class Departement
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("read:departement")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups("read:departement")
      */
     private $nom;
 
     /**
      * @ORM\OneToMany(targetEntity=Commune::class, mappedBy="departement")
-     * @Groups("read:departement")
      */
     private $commune;
 

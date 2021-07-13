@@ -7,13 +7,8 @@ use Faker;
 use Faker\Factory;
 
 use App\Entity\Banques;
-use App\Entity\Commune;
-use App\Entity\Departement;
-use App\Entity\Localites;
 use App\Entity\Operateurs;
-use App\Entity\Quartier;
 use App\Entity\Region;
-use App\Entity\Votes;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
@@ -25,28 +20,23 @@ class AppFixtures extends Fixture
         
         $faker = Faker\Factory::create();
         //Je veux créer 16 opérateurs
-        $liste_operateur = [];
         
-        for($i=0; $i<= 6; $i++){
-            $nomOperators = ['UBA','LocaAfrik','BHS','CS','BSS','ICB','Ecobank','BAS','BIS' ];
+        $nomBanks = ['','UBA','BCAO','BOA','BHS','BICIS','Citi Banque','ICB','LocaAfrik','CS','Ecobank','BSS','CNCA','BRSS','ICB','BAS','BIS', ];
+        for($i=1; $i<=15; $i++){
 
-            $oprators = $nomOperators[$i];
-
-            $chiffreAffaire = $faker->numberBetween(25, 100)."M £uro";
+            $bank = $nomBanks[$i];
 
             $chiffreAffaire = $faker->numberBetween(25, 100)."M £uro";
 
             $operateur = new Operateurs();
-            $operateur->setNom($oprators)
+            $operateur->setNom($bank)
                       ->setLibelle($faker->paragraph(2))
-                      ->setChiffreAffaire($chiffreAffaire)
                       ->setNbreBanks($faker->numberBetween(11,23));
 
             $manager->persist($operateur);
-            $liste_operateur[] = $operateur;
-        }
 
             //je veux créer autant des régions
+<<<<<<< HEAD
         for ($j=0; $j <= 4  ; $j++) { 
             $Nomregions = ['Dakar','Thiès','Diourbel','Fatick','Kaolack'];
 
@@ -110,50 +100,24 @@ class AppFixtures extends Fixture
                             //maintenant, dans chaque quartier, nous avons des localités
                             for ($n=1; $n <mt_rand(2,3) ; $n++) { 
                                 $localite = new Localites();
+=======
+>>>>>>> parent of d1a7d6f (Mise en place d'un espace d'administration)
 
-                                $localite->setNom(strtoupper($faker->citySuffix()))
-                                        ->setQuartier($quartier);
+            $Nomregions = ['Dakar','Thiès','Diourbel','Fatick','Tambacounda'];
 
-                                $manager->persist($localite);
-                            
-            //je veux créer autant de banques que je veux pour chaque localité
-                                for ($p=1; $p < mt_rand(1,2) ; $p++) { 
-                                    
-                                    $banque = new Banques();
-
-                                    $phoneNumber = "+221 ".$faker->phoneNumber();
-
-                                    $operateur_key = mt_rand(1,6);
-
-                                    $banque->setOperateur($liste_operateur[$operateur_key])
-                                            ->setLocalite($localite)
-                                            ->setLatitude($faker->latitude(-90,90))
-                                            ->setLongitude($faker->longitude(-180,180))
-                                            ->setJoursOuverture(mt_rand(1,7)."j/7")
-                                            ->setHeurOuverture(mt_rand(7,11)." H")
-                                            ->setHeurFermiture(mt_rand(13,17)." H")
-                                            ->setAdresse($faker->address())
-                                            ->setTelephone($phoneNumber);
-
-                                    $manager->persist($banque);
-                                
-                                    //maitenant pour chaque banque, on veux créer des votes
-
-                                    for ($t=0; $t <1 ; $t++) { 
-                                        $vote = new Votes();
-
-                                        $vote->setIdBanque($banque)
-                                                ->setValeur(mt_rand(0,5));
-
-                                        $manager->persist($vote);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            for ($j=1; $j < count($Nomregions) ; $j++) { 
+                
+                $region = new Region();
+                $region->nom()
             }
-            $manager->flush();
+
+            
         }
+        $manager->flush();
+    
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of d1a7d6f (Mise en place d'un espace d'administration)

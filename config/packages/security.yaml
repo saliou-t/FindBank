@@ -1,42 +1,16 @@
-security:  
-    encoders: 
-         App\Entity\User:
-            algorithm :  auto
+security:
+    # https://symfony.com/doc/current/security/experimental_authenticators.html
+    enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        users_in_memory: { memory: ~ }
-        in_database: 
-            entity: 
-                class: App\Entity\Admin
-                property : email
-
+        users_in_memory: { memory: null }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            # anonymous: true
             lazy: true
-
-            # provider: users_in_memory
-            provider: in_database
-            
-            #system de connexion
-            form_login: 
-                login_path: app_login 
-                check_path: app_login
-                # success_handler: lexik_jwt_authentication.handler.authentication_success
-                # failure_handler: lexik_jwt_authentication.handler.authentication_failure
-                # default_target_path: absence_index
-
-
-                #system de deconnexion
-            logout: 
-                path: app_logout
-                target: /banques
-            guard:
-                authenticators:
-                    - App\Security\SecurityAuthenticator
+            provider: users_in_memory
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
