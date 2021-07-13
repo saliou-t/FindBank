@@ -10,7 +10,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-
 /**
  * @ORM\Entity(repositoryClass=BanquesRepository::class)
  */
@@ -23,20 +22,23 @@ class Banques
      * @ORM\Id
      * @Groups("read:banques")
      * @ORM\Column(type="integer")
+     * @Groups("banques:read")
      */
     public $id;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity=Localites::class, inversedBy="banques")
      */
     private $localite;
 
     /**
+     * @Groups("banques:read")
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $latitude;
 
     /**
+     * @Groups("banques:read")
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $longitude;
@@ -63,15 +65,18 @@ class Banques
 
     /**
      * @ORM\Column(type="string")
+     * @Groups("banques:read")
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("banques:read")
      */
     private $adresse;
 
     /**
+     * @Groups("banques:read")
      * @ORM\ManyToOne(targetEntity=Operateurs::class, inversedBy="banques")
      */
     private $operateur;

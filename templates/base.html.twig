@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://bootswatch.com/5/yeti/bootstrap.css ">
         <link rel="icon" href="https://unsplash.com/photos/RHZYmxCTiuo">
 
+
       {# Run `composer require symfony/webpack-encore-bundle`
           and uncomment the following Encore helpers to start using Symfony UX #}
       {% block stylesheets %}
@@ -39,6 +40,22 @@
             <div class="">
               <a class="text-white text-decoration-none btn btn-success">Admin</a>
             </div>
+              <a class="nav-link" href="#">APIs</a>
+            </li>
+            </li>
+          </ul>
+          <form class="d-flex">
+           <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <button type="button" class="btn btn-primary">Chercher</button>
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                <a class="dropdown-item" href="#">Dropdown link</a>
+                <a class="dropdown-item" href="#">Dropdown link</a>
+              </div>
+            </div>
+          </div>
+          </form>
         </div>
       </div>
     </nav>

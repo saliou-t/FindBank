@@ -1,6 +1,4 @@
 {% extends 'base.html.twig' %}
-    {# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
-
 
 {% block title %}Banques{% endblock %}
 
@@ -19,6 +17,9 @@
 			{# {{ form(form.localite) }} #}
 		{# {{ form_end(form) }} #}
 	</div>
+</style>
+<h1 class="text-center">Liste des Banques</h1>
+
 	{% for banque in banques %}
 		<div class="container mt-4 ">
 			<div class="row">
