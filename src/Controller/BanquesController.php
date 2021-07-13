@@ -2,15 +2,19 @@
 
 namespace App\Controller;
 
-use App\Entity\Votes;
+use App\Entity\Search;
+use App\Form\SearchFormType;
 use App\Repository\BanquesRepository;
-use Proxies\__CG__\App\Entity\Region;
-use App\Repository\OperateursRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Forms;
+
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 
 class BanquesController extends AbstractController
 {
@@ -20,16 +24,22 @@ class BanquesController extends AbstractController
     // {
     //     // $reponses = $serializerInterface->serialize($banques,'json',['groups'=>"banques:read"]);
     //     //je retourn la réponse au format JSON 
-    //     return $this->json($banquesRepository->findAll(),200,[],['groups'=>'banques:read']);        
+    //     return $this->json($banquesRepository->findAll(),200,[],['groups'=>'read:banques']);        
     // } 
 
-    #[Route('/', name: 'banques')]
-    public function findBansk(BanquesRepository $banquesRepository){
-            
-        return $this->render('banques/banques.html.twig', [
-            'banques' => $banquesRepository->findAll()
-        ]);
-    }
+    // #[Route('/', name: 'banques')]
+    // public function findBansk(BanquesRepository $banquesRepository, Request $request){
+
+    //     // $search = new Search();
+
+    //     // $formBuilder = $this->createForm(SearchType::class,$search);
+    //     // $formBuilder->handleRequest($request);
+                    
+    //     return $this->render('banques/banques.html.twig', [
+    //         'banques' => $banquesRepository->findAll(),
+    //         // 'form' =>  $formBuilder->createVie()
+    //     ]);
+    // }
 
 
     // #[Route('/region/{id}', name:'regionShowBanks')]

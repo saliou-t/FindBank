@@ -4,14 +4,23 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\RegionRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 
 /**
  * @ORM\Entity(repositoryClass=RegionRepository::class)
  */
-#[ApiResource()]
+#[ApiResource(
+    collectionOperations: [
+        'get'=>['normalization_context'=> ['groups' => 'read:region']]
+    ]
+)]
+#[ApiFilter(SearchFilter::class, properties:['id' => 'exact','nom' => 'partial'])]
 
 class Region
 {
@@ -24,6 +33,7 @@ class Region
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("read:region")
      */
     private $nom;
 
@@ -34,6 +44,7 @@ class Region
 
     /**
      * @ORM\OneToMany(targetEntity=Departement::class, mappedBy="region")
+     * @Groups("read:region")
      */
     private $departement;
 

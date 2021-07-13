@@ -4,15 +4,20 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\OperateursRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=OperateursRepository::class)
  */
 
 #[ApiResource]
+#[ApiFilter(SearchFilter::class, properties:['nom' => 'partial'])]
+
 class Operateurs
 {
     /**
@@ -24,10 +29,12 @@ class Operateurs
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Groups("read:banque")
      */
     private $nom;
 
     /**
+     * @Groups("read:banque")
      * @ORM\Column(type="text")
      */
     private $libelle;

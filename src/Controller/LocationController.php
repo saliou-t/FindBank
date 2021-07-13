@@ -14,6 +14,51 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class LocationController extends AbstractController
 {
     #[Route('/regions', name: 'regions')]
+    public function ShowRegion(RegionRepository $regionRepository): Response
+    {   
+        return $this->render('location/region.html.twig', [
+            'regions' => $regionRepository->findAll(),
+        ]);
+    }
+    
+    #[Route('/regions/{id}/departements', name: 'regions_departements')]
+    public function regionDepartements(int $id, RegionRepository $regionRepository,  CommuneRepository $communeRepository){
+        
+        $region = $regionRepository->find($id);
+
+        $departement = $region->getDepartement();
+        
+        return $this->render('location/regionsWithDepartements.html.twig',[
+            'region' => $region, 
+            'departement'=> $departement
+        ]);
+    }
+
+    // #[Route('/departements', name: 'departements')]
+    // public function ShowRegionDepartement( DepartementRepository $departementRepository)
+    // {        
+    //     return $this->render('location/departement.html.twig',[
+    //         'departements' => $departementRepository->findAll()
+    //     ]);
+    // }
+    // #[Route('/communes', name: 'communes')]
+    // public function ShowDepartementCommues( CommuneRepository $communeRepository)
+    // {
+    //     $communes = $communeRepository->findAll();
+        
+    //     return $this->render('location/communes.html.twig',[
+    //         'communes' => $communes
+    //     ]);
+    // }
+    // #[Route('/quartiers', name: 'quartiers')]
+    // public function ShowCommuneQuartier( QuartierRepository $quartierRepository)
+    // {
+    //     $quartiers = $quartierRepository->findAll();
+        
+    //     return $this->render('location/quartiers.html.twig',[
+    //         'quartiers' => $quartiers
+    //     ]);
+    // }
     public function ShowRegion(RegionRepository $regionRepository, DepartementRepository $departementRepository): Response
     {   
         $regions = $regionRepository->findAll();
@@ -51,8 +96,7 @@ class LocationController extends AbstractController
         return $this->render('location/quartiers.html.twig',[
             'quartiers' => $quartiers
         ]);
-    }
-    
+    }    
     // #[Route('/{region}', name: 'locality')]
     // public function localite(Request $request, DepartementRepository $departementRepository): Response
     // {   

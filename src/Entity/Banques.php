@@ -4,24 +4,27 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BanquesRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 /**
  * @ORM\Entity(repositoryClass=BanquesRepository::class)
  */
-#[ApiResource()]
+#[ApiResource()]  
+#[ApiFilter(SearchFilter::class, properties:['id' => 'exact','operateur' => 'partial'])]
+
 class Banques
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @Groups("read:banques")
      * @ORM\Column(type="integer")
      * @Groups("banques:read")
      */
-    private $id;
+    public $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Localites::class, inversedBy="banques")
@@ -87,7 +90,6 @@ class Banques
     {
         return $this->id;
     }
-
 
     public function getLocalite(): ?Localites
     {

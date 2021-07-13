@@ -25,16 +25,14 @@
         </thead>
         <tbody>
         	{% for region in regions %}
-                <tr class="table-primary">
-            
-                    <td>{{region.id}}</td>
-                    <td><a class =" text-white text-decoration-none mt-2 mx-3" href="#">{{region.nom}}</a></td>
-                    <td><a class =" text-white text-decoration-none mt-2 mx-3" href="#">{{region.superficie}}</a></td>
-                    <td><a class =" text-white text-decoration-none mt-2 mx-3" href="#">{{region.departement | length}}</a></td>
-                    <td><a class =" text-white text-decoration-none mt-2 mx-3" href="#">communes</a></td>
-                    <td><a class =" text-white text-decoration-none mt-2 mx-3" href="#">quartiers</a></td>
-                      
-                </tr> 
+              <tr class="table-primary">
+                  <td>{{region.id}}</td>
+                  <td><a class =" text-white text-decoration-none mt-2 mx-3" href="{{path ('regions_departements',{id: region.id})}}">{{region.nom}}</a></td>
+                  <td>{{region.superficie}}</td>
+                  <td><a class =" text-white text-decoration-none mt-2 mx-3" href="#">{{region.departement | length}}</a></td>
+                  <td><a class =" text-white text-decoration-none mt-2 mx-3" href="#">commune</a></td>
+                  <td><a class =" text-white text-decoration-none mt-2 mx-3" href="#">quartiers</a></td>
+              </tr> 
           {% endfor %}
         </tbody>
       </table>      
