@@ -9,6 +9,15 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    // /**
+    //  * @Route("/admin", name="api_login", methods:['POST])
+    //  */
+    // public  function log(){
+    //     $user = $this->getUser();  
+    //     return $this->json([
+    //         'username'=>$user->getUsername()
+    //     ]);
+    // }
     /**
      * @Route("/login", name="app_login")
      */

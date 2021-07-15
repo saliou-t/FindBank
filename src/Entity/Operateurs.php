@@ -10,12 +10,26 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\OperateurBanqueController;
 
 /**
  * @ORM\Entity(repositoryClass=OperateursRepository::class)
  */
 
-#[ApiResource]
+#[ApiResource(
+    itemOperations:[
+        'get',
+        'getOp'=>[
+            'method' => 'GET',
+            'path' => 'operateur/{id}/Banque',
+            'controller' => OperateurBanqueController::class,
+            'read' => true,
+            'openapi_context' => [
+                'summary' => 'Permet de récupérer les banques pour un opérateur spécifique'
+            ] 
+        ]
+    ]
+)]  
 #[ApiFilter(SearchFilter::class, properties:['nom' => 'partial'])]
 
 class Operateurs

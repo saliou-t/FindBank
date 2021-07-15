@@ -11,7 +11,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity(repositoryClass=LocalitesRepository::class)
  */
-#[ApiResource()]
+#[ApiResource(
+    itemOperations:[
+        'get'
+    ]
+)]  
 
 class Localites
 {
@@ -26,8 +30,6 @@ class Localites
      * @ORM\Column(type="string", length=150)
      */
     private $nom;
-
-    
 
     /**
      * @ORM\OneToMany(targetEntity=Banques::class, mappedBy="localite")

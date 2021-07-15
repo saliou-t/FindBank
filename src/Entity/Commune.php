@@ -11,8 +11,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity(repositoryClass=CommuneRepository::class)
  */
-#[ApiResource()]
+#[ApiResource(
+    itemOperations:[
+        'get'
+    ],
+    collectionOperations: [
+        'get'=>['normalization_context'=> ['groups' => 'read:commune']]
+    ]
 
+)]
 class Commune
 {
     /**

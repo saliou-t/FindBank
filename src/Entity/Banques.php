@@ -14,7 +14,11 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 /**
  * @ORM\Entity(repositoryClass=BanquesRepository::class)
  */
-#[ApiResource()]  
+#[ApiResource(
+    itemOperations:[
+        'get'
+    ]
+)]  
 #[ApiFilter(SearchFilter::class, properties:['id' => 'exact','operateur' => 'partial'])]
 
 class Banques

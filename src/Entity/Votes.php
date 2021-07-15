@@ -9,7 +9,15 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ORM\Entity(repositoryClass=VotesRepository::class)
  */
-#[ApiResource()]
+#[ApiResource(
+    itemOperations:[
+        'get'
+    ],    
+    collectionOperations: [
+        'get'=>['normalization_context'=> ['groups' => 'read:vote']]
+    ]
+
+)]  
 
 class Votes
 {

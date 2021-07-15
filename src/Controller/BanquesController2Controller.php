@@ -3,9 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Banques;
+use App\Entity\Search;
 use App\Form\BanquesType;
 use App\Repository\BanquesRepository;
+use App\Repository\OperateursRepository;
+use Proxies\__CG__\App\Entity\Operateurs;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,8 +20,14 @@ class BanquesController2Controller extends AbstractController
     #[Route('/', name: 'banques_controller2_index', methods: ['GET'])]
     public function index(BanquesRepository $banquesRepository): Response
     {
+        // $banks_per_page = $paginator->paginate(
+        //     $banquesRepository->findAll(),
+        //     $request->query->getInt('page',1),
+        //     4
+        // );
+
         return $this->render('banques_controller2/index.html.twig', [
-            'banques' => $banquesRepository->findAll(),
+            'banques' => $banquesRepository->findAll()
         ]);
     }
 
@@ -50,33 +60,24 @@ class BanquesController2Controller extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'banques_controller2_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Banques $banque): Response
-    {
-        $form = $this->createForm(BanquesType::class, $banque);
-        $form->handleRequest($request);
+    #[Route('banques/search', name: 'search')]
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+    public function search( Request $request, OperateursRepository $operateursRepository){
 
-            return $this->redirectToRoute('banques_controller2_index');
-        }
+        $searchForm = $this->createForm(BanquesType::class);
 
-        return $this->render('banques_controller2/edit.html.twig', [
-            'banque' => $banque,
-            'form' => $form->createView(),
+        $searchForm->handleRequest($request);
+
+         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+
+            // $data = $searchForm->getData();
+             dd($data);
+         }
+        // $searchForm = $searchForm->getForm();
+
+        return $this->render('banques/search.html.twig',[
+            'searchForm' => $searchForm->createView(),
         ]);
     }
 
-    #[Route('/{id}', name: 'banques_controller2_delete', methods: ['POST'])]
-    public function delete(Request $request, Banques $banque): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$banque->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($banque);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('banques_controller2_index');
-    }
 }
