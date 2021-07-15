@@ -2,17 +2,14 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\LocalitesRepository;
-use Doctrine\Common\Collections\Collection;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=LocalitesRepository::class)
  */
-#[ApiResource()]
-
 class Localites
 {
     /**
@@ -27,7 +24,25 @@ class Localites
      */
     private $nom;
 
-    
+    /**
+     * @ORM\Column(type="string", length=150)
+     */
+    private $region;
+
+    /**
+     * @ORM\Column(type="string", length=150)
+     */
+    private $departement;
+
+    /**
+     * @ORM\Column(type="string", length=150)
+     */
+    private $commune;
+
+    /**
+     * @ORM\Column(type="string", length=150)
+     */
+    private $quartier;
 
     /**
      * @ORM\OneToMany(targetEntity=Banques::class, mappedBy="localite")
@@ -36,9 +51,9 @@ class Localites
 
     /**
      * @ORM\ManyToOne(targetEntity=Quartier::class, inversedBy="localites")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $quartier;
-
+    private $IdQuertier;
 
     public function __construct()
     {
@@ -58,6 +73,54 @@ class Localites
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getRegion(): ?string
+    {
+        return $this->region;
+    }
+
+    public function setRegion(string $region): self
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    public function getDepartement(): ?string
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(string $departement): self
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    public function getCommune(): ?string
+    {
+        return $this->commune;
+    }
+
+    public function setCommune(string $commune): self
+    {
+        $this->commune = $commune;
+
+        return $this;
+    }
+
+    public function getQuartier(): ?string
+    {
+        return $this->quartier;
+    }
+
+    public function setQuartier(string $quartier): self
+    {
+        $this->quartier = $quartier;
 
         return $this;
     }
@@ -92,16 +155,15 @@ class Localites
         return $this;
     }
 
-    public function getQuartier(): ?Quartier
+    public function getIdQuertier(): ?Quartier
     {
-        return $this->quartier;
+        return $this->IdQuertier;
     }
 
-    public function setQuartier(?Quartier $quartier): self
+    public function setIdQuertier(?Quartier $IdQuertier): self
     {
-        $this->quartier = $quartier;
+        $this->IdQuertier = $IdQuertier;
 
         return $this;
     }
-
 }

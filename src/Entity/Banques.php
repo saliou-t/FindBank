@@ -2,30 +2,28 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BanquesRepository;
-use ApiPlatform\Core\Annotation\ApiFilter;
-use Doctrine\Common\Collections\Collection;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Groups;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=BanquesRepository::class)
  */
-#[ApiResource()]  
-#[ApiFilter(SearchFilter::class, properties:['id' => 'exact','operateur' => 'partial'])]
-
 class Banques
 {
     /**
      * @ORM\Id
-     * @Groups("read:banques")
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    public $id;
-    
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Operateurs::class, inversedBy="banques")
+     */
+    private $nom;
+
     /**
      * @ORM\ManyToOne(targetEntity=Localites::class, inversedBy="banques")
      */
@@ -71,11 +69,6 @@ class Banques
      */
     private $adresse;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Operateurs::class, inversedBy="banques")
-     */
-    private $operateur;
-
     public function __construct()
     {
         $this->votes = new ArrayCollection();
@@ -84,6 +77,18 @@ class Banques
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getNom(): ?Operateurs
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?Operateurs $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 
     public function getLocalite(): ?Localites
@@ -208,18 +213,6 @@ class Banques
     public function setAdresse(?string $adresse): self
     {
         $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    public function getOperateur(): ?Operateurs
-    {
-        return $this->operateur;
-    }
-
-    public function setOperateur(?Operateurs $operateur): self
-    {
-        $this->operateur = $operateur;
 
         return $this;
     }

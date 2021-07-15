@@ -2,22 +2,14 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\OperateursRepository;
-use ApiPlatform\Core\Annotation\ApiFilter;
-use Doctrine\Common\Collections\Collection;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Groups;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=OperateursRepository::class)
  */
-
-#[ApiResource]
-#[ApiFilter(SearchFilter::class, properties:['nom' => 'partial'])]
-
 class Operateurs
 {
     /**
@@ -29,12 +21,10 @@ class Operateurs
 
     /**
      * @ORM\Column(type="string", length=150)
-     * @Groups("read:banque")
      */
     private $nom;
 
     /**
-     * @Groups("read:banque")
      * @ORM\Column(type="text")
      */
     private $libelle;
@@ -45,17 +35,7 @@ class Operateurs
     private $nbre_banks;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $chiffre_affaire;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $logoUrl;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Banques::class, mappedBy="operateur")
+     * @ORM\OneToMany(targetEntity=Banques::class, mappedBy="nom")
      */
     private $banques;
 
@@ -105,30 +85,6 @@ class Operateurs
         return $this;
     }
 
-    public function getChiffreAffaire(): ?string
-    {
-        return $this->chiffre_affaire;
-    }
-
-    public function setChiffreAffaire(?string $chiffre_affaire): self
-    {
-        $this->chiffre_affaire = $chiffre_affaire;
-
-        return $this;
-    }
-
-    public function getLogoUrl(): ?string
-    {
-        return $this->logoUrl;
-    }
-
-    public function setLogoUrl(?string $logoUrl): self
-    {
-        $this->logoUrl = $logoUrl;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Banques[]
      */
@@ -141,7 +97,7 @@ class Operateurs
     {
         if (!$this->banques->contains($banque)) {
             $this->banques[] = $banque;
-            $banque->setOperateur($this);
+            $banque->setNom($this);
         }
 
         return $this;
@@ -151,8 +107,8 @@ class Operateurs
     {
         if ($this->banques->removeElement($banque)) {
             // set the owning side to null (unless already changed)
-            if ($banque->getOperateur() === $this) {
-                $banque->setOperateur(null);
+            if ($banque->getNom() === $this) {
+                $banque->setNom(null);
             }
         }
 

@@ -2,17 +2,14 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\QuartierRepository;
-use Doctrine\Common\Collections\Collection;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=QuartierRepository::class)
  */
-#[ApiResource()]
-
 class Quartier
 {
     /**
@@ -28,14 +25,14 @@ class Quartier
     private $nom;
 
     /**
+     * @ORM\OneToMany(targetEntity=Localites::class, mappedBy="IdQuertier")
+     */
+    private $localites;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Commune::class, inversedBy="quatier")
      */
     private $commune;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Localites::class, mappedBy="quartier")
-     */
-    private $localites;
 
     public function __construct()
     {
@@ -59,18 +56,6 @@ class Quartier
         return $this;
     }
 
-    public function getCommune(): ?Commune
-    {
-        return $this->commune;
-    }
-
-    public function setCommune(?Commune $commune): self
-    {
-        $this->commune = $commune;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Localites[]
      */
@@ -83,7 +68,7 @@ class Quartier
     {
         if (!$this->localites->contains($localite)) {
             $this->localites[] = $localite;
-            $localite->setQuartier($this);
+            $localite->setIdQuertier($this);
         }
 
         return $this;
@@ -93,10 +78,22 @@ class Quartier
     {
         if ($this->localites->removeElement($localite)) {
             // set the owning side to null (unless already changed)
-            if ($localite->getQuartier() === $this) {
-                $localite->setQuartier(null);
+            if ($localite->getIdQuertier() === $this) {
+                $localite->setIdQuertier(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCommune(): ?Commune
+    {
+        return $this->commune;
+    }
+
+    public function setCommune(?Commune $commune): self
+    {
+        $this->commune = $commune;
 
         return $this;
     }
