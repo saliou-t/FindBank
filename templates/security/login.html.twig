@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<form method="post">
+    {# {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% extends "/base.html.twig" %}
+
+ {# {% form_theme form 'bootstrap_4_layout.html.twig' %} #}
+    {% if app.user %}
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Vous vous êtes connecter en tant que {{ app.user.username }}  </strong> <a class="alert-link" href="{{ path('app_logout') }}">Déconnexion</a>
+    </div>
+    {% endif %}
+    <div class="container mt-5">
+    <h1 style="text-align :center">Bienvenue dans le formulaire de connexion !</h1>
+        <article class="container jumbotron bg-light mt-5" style="width: 40%; padding-top: 20px;  padding-bottom: 20px" >
+            <h4 class="text-dark" style="text-align: center">Informations de connexion</h4>
+            <form method="post">
+                <div class="form-group mx-3 my-4">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        <path fill-rule="evenodd" d="M2 15v-1c0-1 1-4 6-4s6 3 6 4v1H2zm6-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>
+                    <label for="inputEmail">Email</label>
+                    <input type="email" placeholder="Adresse mail" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                </div>
+                <div class="form-group mx-3 my-3">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-key" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+                    <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                </svg>
+                    <label for="inputPassword">Password</label>
+                    <input type="password" name="password"  placeholder="Mot de passe" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                </div>
+                <div class="form-group mx-3 my-3">
+                    <button type="submit" class="btn btn-success">Connexion</button>
+                </div>
+
+                {#
+                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                    See https://symfony.com/doc/current/security/remember_me.html
+
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me"> Remember me
+                        </label>
+                    </div>
+                #}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+	        </form>   
+        </article>
+    </div>
+     {# {% if app.user %}
+        <div class="alert alert-success ">Vous êtes connectez !</div>
+     {% endif%}    #}
+ {% endblock %}

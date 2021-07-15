@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\VotesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\VotesRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=VotesRepository::class)
  */
+#[ApiResource()]
+
 class Votes
 {
     /**
@@ -21,11 +24,6 @@ class Votes
      * @ORM\ManyToOne(targetEntity=Banques::class, inversedBy="votes")
      */
     private $id_banque;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $commentaire;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -45,18 +43,6 @@ class Votes
     public function setIdBanque(?Banques $id_banque): self
     {
         $this->id_banque = $id_banque;
-
-        return $this;
-    }
-
-    public function getCommentaire(): ?string
-    {
-        return $this->commentaire;
-    }
-
-    public function setCommentaire(?string $commentaire): self
-    {
-        $this->commentaire = $commentaire;
 
         return $this;
     }
