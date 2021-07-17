@@ -14,20 +14,22 @@ use App\Controller\OperateurBanqueController;
 
 /**
  * @ORM\Entity(repositoryClass=OperateursRepository::class)
- */
-
+ */ 
 #[ApiResource(
     itemOperations:[
         'get',
-        'getOp'=>[
+        'getOp'=>[  
             'method' => 'GET',
-            'path' => 'operateur/{id}/Banque',
+            'path' => 'operateur/{id}/Banques',
             'controller' => OperateurBanqueController::class,
             'read' => true,
             'openapi_context' => [
-                'summary' => 'Permet de récupérer les banques pour un opérateur spécifique'
+                'summary' => 'Permet de récupérer les banques pour un opérateur spécifique',
             ] 
         ]
+    ],
+    collectionOperations: [
+        'get'=>['normalization_context' => ['groups' => 'read:operateur', 'read:item']],
     ]
 )]  
 #[ApiFilter(SearchFilter::class, properties:['nom' => 'partial'])]
@@ -43,12 +45,12 @@ class Operateurs
 
     /**
      * @ORM\Column(type="string", length=150)
-     * @Groups("read:banque")
+     * @Groups("read:operateur", "read:banques")
      */
     private $nom;
 
     /**
-     * @Groups("read:banque")
+     * @Groups("read:operateur")
      * @ORM\Column(type="text")
      */
     private $libelle;
@@ -70,6 +72,7 @@ class Operateurs
 
     /**
      * @ORM\OneToMany(targetEntity=Banques::class, mappedBy="operateur")
+     * @Groups("read:operateur")
      */
     private $banques;
 

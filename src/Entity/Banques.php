@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\Length;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
@@ -16,7 +17,15 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  */
 #[ApiResource(
     itemOperations:[
-        'get'
+        'get',
+        'put' => [
+            'denormalization_context' => [
+                'groups' => ['put:banques']
+            ]
+        ]
+    ],
+    collectionOperations: [
+        'get' => ['normalization_context'=> ['groups' => 'read:banques']]
     ]
 )]  
 #[ApiFilter(SearchFilter::class, properties:['id' => 'exact','operateur' => 'partial'])]
@@ -25,7 +34,7 @@ class Banques
 {
     /**
      * @ORM\Id
-     * @Groups("read:banques")
+     * @Groups("read:banques", "read:item")
      * @ORM\Column(type="integer")
      */
     public $id;
@@ -34,17 +43,21 @@ class Banques
      * @ORM\ManyToOne(targetEntity=Localites::class, inversedBy="banques")
      */
     private $localite;
-
+    
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups("read:banques", "put:banques")
+     * @Length("min 20", "max 30")
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups("put:banques")
+     * @Length("min 20", "max 30")
      */
     private $longitude;
-
+    
     /**
      * @ORM\Column(type="string", length=15, nullable=true)
      */
@@ -77,6 +90,7 @@ class Banques
 
     /**
      * @ORM\ManyToOne(targetEntity=Operateurs::class, inversedBy="banques")
+     * @Groups("read:banques")
      */
     private $operateur;
 
