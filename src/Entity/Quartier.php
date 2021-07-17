@@ -11,7 +11,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity(repositoryClass=QuartierRepository::class)
  */
-#[ApiResource()]
+#[ApiResource(
+    itemOperations:[
+        'get'
+    ],
+    collectionOperations: [
+        'get'=>['normalization_context'=> ['groups' => 'read:quartier']]
+    ]
+
+)]  
 
 class Quartier
 {

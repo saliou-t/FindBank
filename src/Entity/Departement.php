@@ -15,10 +15,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=DepartementRepository::class)
  */
+
 #[ApiResource(
     itemOperations:[
         'get',
-        'Delete'
     ],
     normalizationContext:[
         'get'=>['normalization_context'=>['groups'=>'read:departement']]

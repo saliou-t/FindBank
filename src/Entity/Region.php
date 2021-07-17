@@ -16,6 +16,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * @ORM\Entity(repositoryClass=RegionRepository::class)
  */
 #[ApiResource(
+    itemOperations:[
+        'get'
+    ],
     collectionOperations: [
         'get'=>['normalization_context'=> ['groups' => 'read:region']]
     ]

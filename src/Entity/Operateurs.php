@@ -10,12 +10,28 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\OperateurBanqueController;
 
 /**
  * @ORM\Entity(repositoryClass=OperateursRepository::class)
- */
-
-#[ApiResource]
+ */ 
+#[ApiResource(
+    itemOperations:[
+        'get',
+        'getOp'=>[  
+            'method' => 'GET',
+            'path' => 'operateur/{id}/Banques',
+            'controller' => OperateurBanqueController::class,
+            'read' => true,
+            'openapi_context' => [
+                'summary' => 'Permet de récupérer les banques pour un opérateur spécifique',
+            ] 
+        ]
+    ],
+    collectionOperations: [
+        'get'=>['normalization_context' => ['groups' => 'read:operateur', 'read:item']],
+    ]
+)]  
 #[ApiFilter(SearchFilter::class, properties:['nom' => 'partial'])]
 
 class Operateurs
@@ -29,12 +45,12 @@ class Operateurs
 
     /**
      * @ORM\Column(type="string", length=150)
-     * @Groups("read:banque")
+     * @Groups("read:operateur", "read:banques")
      */
     private $nom;
 
     /**
-     * @Groups("read:banque")
+     * @Groups("read:operateur")
      * @ORM\Column(type="text")
      */
     private $libelle;
@@ -56,6 +72,7 @@ class Operateurs
 
     /**
      * @ORM\OneToMany(targetEntity=Banques::class, mappedBy="operateur")
+     * @Groups("read:operateur")
      */
     private $banques;
 

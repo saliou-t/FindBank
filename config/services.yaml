@@ -28,3 +28,9 @@ services:
         class: UserBundle\Form\RegistrationFormType
         tags:
             - { name: form.type, alias: user_registration }
+
+
+    App\OpenApi\OpenApiFactory:
+        decorates: 'api_platform.openapi.factory'
+        arguments: ['@App\OpenApi\OpenApiFactory.inner']
+        autoconfigure: false

@@ -7,12 +7,21 @@ use App\Repository\CommuneRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CommuneRepository::class)
  */
-#[ApiResource()]
+#[ApiResource(
+    itemOperations:[
+        'get',
+        'put' => ['denormalization_constext' => ['groups' => 'put:commune']]
+    ],
+    collectionOperations: [
+        'get' => ['normalization_context'=> ['groups' => 'read:commune']],
+    ]
 
+)]
 class Commune
 {
     /**
@@ -24,6 +33,7 @@ class Commune
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("put:commune")
      */
     private $nom;
 
