@@ -2,40 +2,82 @@
 
 namespace App\OpenApi;
 
-use ApiPlatform\Core\OpenApi\Factory\OpenApiFactoryInterface;
 use ArrayObject;
+// use Symfony\Flex\Unpack\Operation;
+use ApiPlatform\Core\OpenApi\Model\Operation;
+use ApiPlatform\Core\OpenApi\Model\RequestBody;
+use ApiPlatform\Core\OpenApi\Model\PathItem;
+use ApiPlatform\Core\OpenApi\Factory\OpenApiFactoryInterface;
+// use Model\RequestBody;
 
 class  OpenApiFactory implements OpenApiFactoryInterface{
 
+    private  $decorated;
 
-    private  $decoreted;
-
-    public function __construct(OpenApiFactoryInterface $decoreted)
+    public function __construct(OpenApiFactoryInterface $decorated)
     {
-        $this->decoreted = $decoreted;
+        $this->decorated = $decorated;
     }
 
     public function __invoke(array $context = []): \ApiPlatform\Core\OpenApi\OpenApi
     {
-        $openApi = $this->decoreted->__invoke($context);
+        $openApi = ($this->decorated)($context);
+        $schemas = $openApi->getComponents()->getSchemas();
 
-        
-        //on récupérer les chemins
-        foreach ($openApi->getPaths()->getPaths() as $key => $path) {
-            if ($path->getGet() && $path->getGet()->getSummary() == 'suppression') {
-                $openApi->getPaths()->addPath($key, $path->withGet(null));
-            }
-        }
-        
-
-        $schemas = $openApi->getComponents()->getSecuritySchemes();
-        $schemas ['cookieAth'] = new \ArrayObject([
-            'type' => 'apikey',
-            'in' => 'cookie',
-            'name' =>'PHPSESSID'
+        $schemas['Token'] = new \ArrayObject([
+            'type' => 'object',
+            'properties' => [
+                'token' => [
+                    'type' => 'string',
+                    'readOnly' => true,
+                ],
+            ],
+        ]);
+        $schemas['Credentials'] = new \ArrayObject([
+            'type' => 'object',
+            'properties' => [
+                'email' => [
+                    'type' => 'string',
+                    'example' => 'johndoe@example.com',
+                ],
+                'password' => [
+                    'type' => 'string',
+                    'example' => 'apassword',
+                ],
+            ],
         ]);
 
-        $openApi = $openApi->withSecurity(['cookieAuth' =>[]]);
+        $pathItem = new PathItem(
+            ref: 'JWT Token',
+            post: new Operation(
+                operationId: 'postCredentialsItem',
+                tags: ['Token'],
+                responses: [
+                    '200' => [
+                        'description' => 'Obtenir un token',
+                        'content' => [
+                            'application/json' => [
+                                'schema' => [
+                                    '$ref' => '#/components/schemas/Token',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                summary: 'Obtenir un token pour se connecter.',
+                requestBody: new RequestBody(
+                    description: 'Generarer un nouveau token',
+                    content: new \ArrayObject([
+                        'application/json' => [
+                            'schema' => [
+                                '$ref' => '#/components/schemas/Credentials',
+                            ],
+                        ],
+                    ]),
+                ),
+            ),
+        );
+        $openApi->getPaths()->addPath('/authentication_token', $pathItem);
 
         return $openApi;
     }
