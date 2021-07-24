@@ -67,13 +67,18 @@ class BanquesController2Controller extends AbstractController
         $searchForm = $this->createForm(BanquesType::class);
 
         $searchForm->handleRequest($request);
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            
+            //je récupere le nom entré par l'utilisateur
+            $nom = $searchForm->getViewData()->getNom();
+            $operateur = $operateursRepository->findOneBy(['nom' => $nom]);
 
-         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-
-            // $data = $searchForm->getData();
-             dd($data);
+            dd($operateur->getBanques());
+            
+            return $this->render('banques/searchResult.html.twig',[
+                'resultats' => $operateur 
+            ]);
          }
-        // $searchForm = $searchForm->getForm();
 
         return $this->render('banques/search.html.twig',[
             'searchForm' => $searchForm->createView(),

@@ -10,6 +10,11 @@ security:
                 class: App\Entity\Admin
                 property : email
 
+        search_operator: { memory: ~ }
+        in_search:
+            entity:
+                class: App\Entity\Search        
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -20,6 +25,8 @@ security:
             provider: in_database
             json_login:
                 check_path: api_login
+
+            # provider: in_search
             
             #system de connexion
             form_login: 

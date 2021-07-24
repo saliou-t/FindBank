@@ -17,12 +17,13 @@ use App\Controller\OperateurBanqueController;
  */ 
 #[ApiResource(
     itemOperations:[
-        'get',
+        'get' => [
+            
+        ],
         'getOp'=>[  
             'method' => 'GET',
             'path' => 'operateur/{id}/Banques',
             'controller' => OperateurBanqueController::class,
-            'read' => true,
             'openapi_context' => [
                 'summary' => 'Permet de récupérer les banques pour un opérateur spécifique',
             ] 

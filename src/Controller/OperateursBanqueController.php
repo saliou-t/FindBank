@@ -14,7 +14,8 @@ class OperateurBanqueController{
         $this->operateursRepository = $operateursRepository;
     }
 
-    public function __invoke(): int{
-        return $this->operateursRepository->count();
+    public function __invoke($id): int{
+        $operatorsBanques = $operateursRepository->findOneBy(['id' => $id]);
+        dd($operatorsBanques);
     }
 }

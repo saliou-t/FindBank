@@ -19,13 +19,23 @@ class  OpenApiFactory implements OpenApiFactoryInterface{
     {
         $openApi = $this->decoreted->__invoke($context);
 
+        
+        //on récupérer les chemins
+        foreach ($openApi->getPaths()->getPaths() as $key => $path) {
+            if ($path->getGet() && $path->getGet()->getSummary() == 'suppression') {
+                $openApi->getPaths()->addPath($key, $path->withGet(null));
+            }
+        }
+        
+
         $schemas = $openApi->getComponents()->getSecuritySchemes();
-        $schemas['cookieAuth'] = new ArrayObject([
+        $schemas ['cookieAth'] = new \ArrayObject([
             'type' => 'apikey',
             'in' => 'cookie',
             'name' =>'PHPSESSID'
         ]);
-        // $openApi->$openApi->withSecurity(['cookieAuth' =>[]]);
+
+        $openApi = $openApi->withSecurity(['cookieAuth' =>[]]);
 
         return $openApi;
     }
