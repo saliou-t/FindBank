@@ -28,11 +28,30 @@ class  OpenApiFactory implements OpenApiFactoryInterface{
         }
         
 
-        $schemas = $openApi->getComponents()->getSecuritySchemes();
-        $schemas ['cookieAth'] = new \ArrayObject([
-            'type' => 'apikey',
-            'in' => 'cookie',
-            'name' =>'PHPSESSID'
+        $openApi = ($this->decorated)($context);
+        $schemas = $openApi->getComponents()->getSchemas();
+
+        $schemas['Token'] = new \ArrayObject([
+            'type' => 'object',
+            'properties' => [
+                'token' => [
+                    'type' => 'string',
+                    'readOnly' => true,
+                ],
+            ],
+        ]);
+        $schemas['Credentials'] = new \ArrayObject([
+            'type' => 'object',
+            'properties' => [
+                'email' => [
+                    'type' => 'string',
+                    'example' => 'teste@teste.com',
+                ],
+                'password' => [
+                    'type' => 'string',
+                    'example' => 'password',
+                ],
+            ],
         ]);
 
         $openApi = $openApi->withSecurity(['cookieAuth' =>[]]);

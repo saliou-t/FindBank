@@ -73,7 +73,12 @@ class BanquesController2Controller extends AbstractController
             $nom = $searchForm->getViewData()->getNom();
             $operateur = $operateursRepository->findOneBy(['nom' => $nom]);
 
-            dd($operateur->getBanques());
+            if (!empty($operateur) ) {
+                dd($operateur);
+            }else {
+                // dd($operateur->getBanques());*
+                dd($this->createNotFoundException("Aucun résultat pour $nom"));
+            }
             
             return $this->render('banques/searchResult.html.twig',[
                 'resultats' => $operateur 
@@ -85,4 +90,11 @@ class BanquesController2Controller extends AbstractController
         ]);
     }
 
+    #[Route('banques/geo/{id}', name: 'geolocalisation')]
+    public function geolocation(){
+        return $this->render('banques/geo.html.twig',[
+            'latitude'  => 56.236,
+            'longitude' => 22.236
+        ]);
+    }
 }
