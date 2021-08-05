@@ -91,8 +91,9 @@ class BanquesController2Controller extends AbstractController
     }
 
     #[Route('banques/geo/{id}', name: 'geolocalisation')]
-    public function geolocation(){
+    public function geolocation(Banques $banque){
         return $this->render('banques/geo.html.twig',[
+            'banque'    => $banque,
             'latitude'  => 56.236,
             'longitude' => 22.236
         ]);
