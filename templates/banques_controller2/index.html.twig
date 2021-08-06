@@ -3,7 +3,7 @@
 {% block title %}Banques index{% endblock %}
 
 {% block body %}
-    <h1>Banques</h1>
+    <h1 class="text-center">Liste des banques</h1>
 			{% for banque in banques %}
 		<div class="container mt-4 ">
 			<div class="">
@@ -29,11 +29,11 @@
 				  	</div>
 				  	<div class="row">
 				  		<div class="col-3 mt-4">
-				  			<img src="http://placehold.it/150x150" alt="..." class="img-thumbnail"><h6 class="mt-2 "><a class="text-decoration-none" href="{{path('banques_controller2_show',{'id':banque.id})}} ">Voir</a></h6>
+				  			<img src="{{banque.operateur.logoUrl}}" alt="..." class="img-thumbnail"><h6 class="mt-2 "><a class="text-decoration-none mx-5" href="{{path('banques_controller2_show',{'id':banque.id})}} ">Voir</a></h6>
 				  		</div>
 				  		<div class="col">
 							<div class="card-body">
-							    <h4 class="card-title">{{banque.localite.nom}}</h4>
+							    <h4 class="card-title"><strong>{{banque.operateur.nom}}</strong>-{{banque.localite.nom}}</h4>
 							    <p class="card-text">
 							    	Operator libelle :{{banque.operateur.libelle}}
 							    </p>

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/banques')]
-class BanquesController2Controller extends AbstractController
+class BanquesController extends AbstractController
 {
     #[Route('/', name: 'banques_controller2_index', methods: ['GET'])]
     public function index(BanquesRepository $banquesRepository): Response
@@ -98,4 +98,5 @@ class BanquesController2Controller extends AbstractController
             'longitude' => 22.236
         ]);
     }
+    
 }

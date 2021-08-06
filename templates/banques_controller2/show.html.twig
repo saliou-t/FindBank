@@ -33,11 +33,11 @@
 			</div>
 			<div class="row">
 				<div class="col-3 mt-4">
-					<img src="http://placehold.it/150x150" alt="..." class="img-thumbnail">
+					<img src="{{banque.operateur.logoUrl}}" alt="..." class="img-thumbnail">
 				</div>
 				<div class="col">
 					<div class="card-body">
-						<h4 class="card-title">{{banque.localite.nom}}</h4>
+						<h4 class="card-title"><strong>{{banque.operateur.nom}}</strong>-{{banque.localite.nom}}</h4>
 						<p class="card-text">
 							Operator libelle :{{banque.operateur.libelle}}
 						</p>
