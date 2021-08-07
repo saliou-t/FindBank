@@ -1,6 +1,3 @@
-{% extends "base.html.twig" %}
-{% block body %}
-
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -14,11 +11,16 @@
         <!-- CSS -->
         <style>
             #maCarte{
+<<<<<<< HEAD
                 height: 500px;
+=======
+                height: 400px;
+>>>>>>> parent of b4be76f (amélioration de la géolocalisation)
             }
         </style>
     </head>
     <body>
+<<<<<<< HEAD
         <div class="row mx-1 mt-3">
             <div class="col-5 my-5">
                 <!-- banque -->
@@ -99,12 +101,20 @@
             </div>
         </div>
     </div>    
+=======
+        <div id="maCarte"></div>
+
+>>>>>>> parent of b4be76f (amélioration de la géolocalisation)
         <!-- Fichiers Javascript -->
         <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
         <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
         <script>
             var villes = {
+<<<<<<< HEAD
                 "Dakar": { "lat": {{banque.latitude}}, "lon": -17.44406 },
+=======
+                "Dakar": { "lat": 14.6937, "lon": -17.4441 },
+>>>>>>> parent of b4be76f (amélioration de la géolocalisation)
             };
             var tableauMarqueurs = [];
 
@@ -148,6 +158,10 @@
             carte.addLayer(marqueurs);
         </script>
     </body>
+<<<<<<< HEAD
 </html>
 {% endblock %}
             {# var marker = L.marker([14.6937,  -17.4441]).addTo(mymap); #}
+=======
+</html>
+>>>>>>> parent of b4be76f (amélioration de la géolocalisation)
