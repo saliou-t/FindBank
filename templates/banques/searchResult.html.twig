@@ -1,18 +1,11 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Banques{% endblock %}
+{% extends "base.html.twig" %}
 
 {% block body %}
-  <div class="" style="margin-left:10%; margin-top:10px">
-
-	<div class="row text-left mb-1">
-			<div class="col-3">
-				<a class="btn btn-primary" href="{{ path('banques_controller2_index') }}"> ← Retour </a>
-			</div>
-		</div>
+    {% for banques in resultats %}
+        {% for banque in banques.banques %}
+              <div class="" style="margin-left:30%; margin-top:70px">
 		<div class="card shadow-lg p-3 mb-5 bg-white rounded border-primary border-primary" style="max-width:75%">
 			<div class="row card-header">
-			
 				<div class="col-5 text-left"><strong>{{banque.operateur.nom}}</strong></div>	
 				<div class="col-5 text-right"> 
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
@@ -27,17 +20,17 @@
 					</svg>
 					<em>
 					{% for votes in banque.votes %}
-						<strong> {{votes.valeur}}</strong>
+							<strong> {{votes.valeur}}</strong>
 					{% endfor %}</em>/5
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3 mt-4">
-					<img src="{{banque.operateur.logoUrl}}" alt="..." class="img-thumbnail">
+					<img src="http://placehold.it/150x150" alt="..." class="img-thumbnail">
 				</div>
 				<div class="col">
 					<div class="card-body">
-						<h4 class="card-title"><strong>{{banque.operateur.nom}}</strong>-{{banque.localite.nom}}</h4>
+						<h4 class="card-title">{{banque.localite.nom}}</h4>
 						<p class="card-text">
 							Operator libelle :{{banque.operateur.libelle}}
 						</p>
@@ -70,9 +63,8 @@
 				<div class="col-4"></div>
 			</div>
 		</div>
-		
 	</div>
 	</div>
-
-
+        {% endfor %}
+    {% endfor %}
 {% endblock %}

@@ -17,10 +17,11 @@ class BanquesType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('localite', EntityType::class, [
-                'class'=>Localites::class,
-                'choice_label'=>'nom',
-                'label'=>'Localité ?'])
+            // ->add('localite', EntityType::class, [
+            //     'class'=>Localites::class,
+            //     'choice_label'=>'nom',
+            //     'label'=>'Localité ?'])
+            ->add('Rechercher', SubmitType::class)
             ->getForm()
         ;
     }
@@ -28,7 +29,7 @@ class BanquesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Banques::class,
+            'data_class' => Operateurs::class,
             'methode'=>'get'
         ]);
     }

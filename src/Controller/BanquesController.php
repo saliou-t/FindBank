@@ -2,54 +2,100 @@
 
 namespace App\Controller;
 
+use App\Entity\Banques;
 use App\Entity\Search;
-use App\Form\SearchFormType;
+use App\Form\BanquesType;
 use App\Repository\BanquesRepository;
+use App\Repository\OperateursRepository;
+use Proxies\__CG__\App\Entity\Operateurs;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Forms;
 
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SearchType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-
+#[Route('/banques')]
 class BanquesController extends AbstractController
 {
-    // #[Route('/banques/api', name: 'banquesResources')]
+    #[Route('/', name: 'banques_controller2_index', methods: ['GET'])]
+    public function index(BanquesRepository $banquesRepository): Response
+    {
+        // $banks_per_page = $paginator->paginate(
+        //     $banquesRepository->findAll(),
+        //     $request->query->getInt('page',1),
+        //     4
+        // );
 
-    // public function BanksResources(BanquesRepository $banquesRepository): Response
-    // {
-    //     // $reponses = $serializerInterface->serialize($banques,'json',['groups'=>"banques:read"]);
-    //     //je retourn la réponse au format JSON 
-    //     return $this->json($banquesRepository->findAll(),200,[],['groups'=>'read:banques']);        
-    // } 
+        return $this->render('banques_controller2/index.html.twig', [
+            'banques' => $banquesRepository->findAll()
+        ]);
+    }
 
-    // #[Route('/', name: 'banques')]
-    // public function findBansk(BanquesRepository $banquesRepository, Request $request){
+    #[Route('/new', name: 'banques_controller2_new', methods: ['GET', 'POST'])]
+    public function new(Request $request): Response
+    {
+        $banque = new Banques();
+        $form = $this->createForm(BanquesType::class, $banque);
+        $form->handleRequest($request);
 
-    //     // $search = new Search();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($banque);
+            $entityManager->flush();
 
-    //     // $formBuilder = $this->createForm(SearchType::class,$search);
-    //     // $formBuilder->handleRequest($request);
-                    
-    //     return $this->render('banques/banques.html.twig', [
-    //         'banques' => $banquesRepository->findAll(),
-    //         // 'form' =>  $formBuilder->createVie()
-    //     ]);
-    // }
+            return $this->redirectToRoute('banques_controller2_index');
+        }
 
+        return $this->render('banques_controller2/new.html.twig', [
+            'banque' => $banque,
+            'form' => $form->createView(),
+        ]);
+    }
 
-    // #[Route('/region/{id}', name:'regionShowBanks')]
-    // public function showByRegion($id, RegionRepository $region){
+    #[Route('/{id}', name: 'banques_controller2_show', methods: ['GET'])]
+    public function show(Banques $banque): Response
+    {
+        return $this->render('banques_controller2/show.html.twig', [
+            'banque' => $banque,
+        ]);
+    }
 
-    //     $regionContent = $region->findOneBy($id);
-    //     dd($region);
+    #[Route('banques/search', name: 'search')]
 
-    //     return $this->render('location/regionShowBanks.html.twig',[
-    //         'region' =>$regionContent
-    //     ]);
-    // }
+    public function search( Request $request, OperateursRepository $operateursRepository){
+
+        $searchForm = $this->createForm(BanquesType::class);
+
+        $searchForm->handleRequest($request);
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            
+            //je récupere le nom entré par l'utilisateur
+            $nom = $searchForm->getViewData()->getNom();
+            $operateur = $operateursRepository->findOneBy(['nom' => $nom]);
+
+            if (!empty($operateur) ) {
+                dd($operateur);
+            }else {
+                // dd($operateur->getBanques());*
+                dd($this->createNotFoundException("Aucun résultat pour $nom"));
+            }
+            
+            return $this->render('banques/searchResult.html.twig',[
+                'resultats' => $operateur 
+            ]);
+         }
+
+        return $this->render('banques/search.html.twig',[
+            'searchForm' => $searchForm->createView(),
+        ]);
+    }
+
+    #[Route('banques/geo/{id}', name: 'geolocalisation')]
+    public function geolocation(){
+        return $this->render('banques/geo.html.twig',[
+            'latitude'  => 56.236,
+            'longitude' => 22.236
+        ]);
+    }
+    
 }

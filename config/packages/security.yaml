@@ -10,23 +10,28 @@ security:
                 class: App\Entity\Admin
                 property : email
 
+        # un provider pour la gestion de recherche
+        search_operator: { memory: ~ }
+        in_search:
+            entity:
+                class: App\Entity\Search        
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+       
         main:
             lazy: true
 
             provider: in_database
             json_login:
                 check_path: api_login
-            
-            #system de connexion
+
+            #system de connexion via formulaire
             form_login: 
                 login_path: app_login 
                 check_path: app_login
-
-                # default_target_path: absence_index
 
                 #system de deconnexion
             logout: 
@@ -35,15 +40,10 @@ security:
             guard:
                 authenticators:
                     - App\Security\SecurityAuthenticator
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
+          
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
